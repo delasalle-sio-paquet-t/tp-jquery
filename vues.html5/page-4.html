@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>TP JQuery / Animation d'objets</title>
+<style>
+	body
+	{
+		background-color : black;
+		margin : 0px;
+		padding : 10px;
+	}
+	
+	#espace 
+	{
+		background-image : url('../images/espace1.jpg');
+		width : 700px;
+		height : 437px;
+		border : 3px solid black;
+		margin : 30px auto;
+	}
+	
+	#soucoupe 
+	{
+		background-image : url('../images/soucoupe1.gif');
+		width :100px;
+		height : 76px;
+		margin : 0px;
+	}
+</style>
+<script src="../scripts/jquery-1.12.0.js"></script>
+<script>
+	var largeurJeu;
+	var hauteurJeu;
+	var largeurSoucoupe;
+	var hauteurSoucoupe;
+	var xSoucoupe;
+	var ySoucoupe;
+	var pasHorizontal = 10;
+	var pasVertical = 10;
+	var pasX;
+	var pasY;
+	
+	$(document).ready(initialisations);
+	
+	function initialisations()
+	{
+		largeurJeu = $("#espace").css("width");
+		largeurJeu = parseInt(largeurJeu.substr(0, largeurJeu.indexOf("px")));
+		
+		hauteurJeu = $("#espace").css("height");
+		hauteurJeu = parseInt(hauteurJeu.substr(0, hauteurJeu.indexOf("px")));
+		
+		largeurSoucoupe = $("#soucoupe").css("width");
+		largeurSoucoupe = parseInt(largeurSoucoupe.substr(0, largeurSoucoupe.indexOf("px")));
+		
+		hauteurSoucoupe = $("#soucoupe").css("height");
+		hauteurSoucoupe = parseInt(hauteurSoucoupe.substr(0, hauteurSoucoupe.indexOf("px")));
+		
+		xSoucoupe = $("#soucoupe").css("margin-left");
+		xSoucoupe = parseInt(xSoucoupe.substr(0, xSoucoupe.indexOf("px")));
+		
+		ySoucoupe = $("#soucoupe").css("margin-top");
+		ySoucoupe = parseInt(ySoucoupe.substr(0, ySoucoupe.indexOf("px")));
+		
+		pasX = pasHorizontal;
+		pasY =0;
+		
+		$(document).keydown(gestionKeydown);
+		
+		var timer = setInterval("deplacement()", 20);
+	}
+	
+	function gestionKeydown(evenement)
+	{
+		if (evenement.which == 39)
+			{
+				pasX = pasHorizontal;
+				pasY = 0;
+			}
+		else if (evenement.which == 37)
+			{
+				pasX = -pasHorizontal;
+				pasY = 0;
+			}
+		else if (evenement.which == 40)
+			{
+				pasY = pasVertical;
+				pasX = 0;
+			}
+		else if (evenement.which == 38)
+			{
+				pasY = - pasVertical;
+				pasX = 0;
+			}
+	}
+	
+	function deplacement()
+	{
+		if (pasX > 0 && xSoucoupe < largeurJeu - largeurSoucoupe)
+			{
+				xSoucoupe += pasX;
+				$("#soucoupe").css("margin-left", xSoucoupe);
+			}
+		if (pasX < 0 && xSoucoupe > 0)
+			{
+				xSoucoupe += pasX;
+				$("#soucoupe").css("margin-left", xSoucoupe);
+			}
+		if (pasY > 0 && ySoucoupe < hauteurJeu - hauteurSoucoupe)
+			{
+				ySoucoupe += pasY;
+				$("#soucoupe").css("margin-top", ySoucoupe);
+			}
+		if (pasY < 0 && ySoucoupe > 0)
+			{
+				ySoucoupe += pasY;
+				$("#soucoupe").css("margin-top", ySoucoupe);
+			}
+	}
+</script>
+</head>
+<body>
+	<div id="espace">
+		<div id="soucoupe">
+		</div>
+	</div>
+</body>
+</html>
