@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>TP JQuery 2 / Infobulles</title>
+<style>
+	body
+	{
+		margin : 0;
+		padding-left : 10px;
+		padding-right : 10px;
+		font : 90% Arial, Helvetica, sans-serif;
+	}
+	
+	.lien
+	{
+		text-decoration : none;
+		border-bottom : 1px dashed black;
+		color : black;	
+	}
+	
+	#infobulle 
+	{
+		position : absolute;
+		border : 1px solid black;
+		background : #9cf;
+		padding : 2px 5px;
+		display : none;
+	}
+</style>
+<script src="../scripts/jquery-1.12.0.js"></script>
+<script>
+	$(document).ready(initialisations);
+	
+	function initialisations()
+	{
+		xOffset = 20;
+		yOffset=10;
+		
+		$("a.lien").mouseenter(entreeSourisSurLien);
+		$("a.lien").mouseleave(sortieSourisDuLien);
+		$("a.lien").mousemove(deplacementSouris);
+	};
+	
+	function entreeSourisSurLien(e)
+	{
+		this.texte = this.title;
+		this.title = "";
+		$("body").append("<p id='infobulle'>" + this.texte + "</p>");
+		
+		$("#infobulle").css("top", (e.pageY - yOffset) + "px");
+		$("#infobulle").css("left", (e.pageX + xOffset) + "px");
+		$("#infobulle").fadeIn("fast");
+	};
+	
+	function sortieSourisDuLien()
+	{
+		this.title = this.texte;
+		$("#infobulle").remove();
+	}
+	
+	function deplacementSouris(e)
+	{
+		$("#infobulle").css("top", (e.pageY - yOffset) + "px");
+		$("#infobulle").css("left", (e.pageX + xOffset) + "px");
+	}
+</script>
+</head>
+<body>
+	<p>Jquery est un framework
+	<a href="#" class="lien" title="Langage de scripts utilisé dans les pages web interactives">JavaScript</a>
+	libre qui porte sur l'interaction entre le HTML et le JavaScript (comprenant le 
+	<a href="#" class="lien" title="Document Object Model">DOM</a>
+	et l'
+	<a href="#" class="lien" title="Asynchronous JavaScript And XML">AJAX</a>).</p>
+	<p><img alt="" src="../images/jquery-logo.gif"/></p>
+	<p>Source : <a href="#" class="lien" title="Encyclopédie universelle disponible sur le Web">Wikipedia</a></p>
+</body>
+</html>

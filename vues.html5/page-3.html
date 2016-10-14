@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>TP Jquery 3 / Zoom sur images</title>
+<style>
+	body
+	{
+		margin : 0px;
+		padding : 10px;
+		font : 100% Arial, Helvetica, sans-serif;
+	}
+	
+	div
+	{
+		width : 500px;
+	}
+	
+	h2
+	{
+		clear : both;
+		font-size : 160%;
+		font-weight : normal;
+		margin : 0px;
+		padding-top : 10px;
+		padding-bottom : 15px;
+	}
+	
+	.lien 
+	{
+		text-decoration : none;
+		color : black;
+	}
+	
+	img 
+	{
+		border : 1px solid black;
+	}
+	
+	ul, li
+	{
+		margin : 0px;
+		padding : 0px;
+	}
+	
+	li
+	{
+		list-style : none;
+		float : left;
+		display : inline;
+		margin-right : 5px;
+		margin-bottom : 5px;
+	}
+	
+	#zoom
+	{
+		position : absolute;
+		border : 1px solid #333;
+		background : #333;
+		padding : 3px;
+		display : none;
+		color : #fff;
+	}
+</style>
+<script src="../scripts/jquery-1.12.0.js"></script>
+<script>
+	$(document).ready(initialisations);
+	
+	function initialisations()
+	{
+		xOffset = 20;
+		yOffset=10;
+		
+		$("a.lien").mouseenter(entreeSourisSurLien);
+		$("a.lien").mouseleave(sortieSourisDuLien);
+		$("a.lien").mousemove(deplacementSouris);
+	};
+	
+	function entreeSourisSurLien(e)
+	{
+		this.texte = this.title;
+		this.title = "";
+		
+		var legende = (this.texte == "") ? "'" : "<br/>" + this.texte;
+		
+		$("body").append("<p id='zoom'><img src='" + this.href + "'alt='Visualisation image'/>" + legende + "</p>");
+		$("#zoom").css("top", (e.pageY - yOffset) + "px");
+		$("#zoom").css("left", (e.pageX + xOffset) + "px");
+		$("#zoom").fadeIn("slow");
+	};
+	
+	function sortieSourisDuLien()
+	{
+		this.title = this.texte;
+		$("#zoom").remove();
+	}
+	
+	function deplacementSouris (e)
+	{
+		$("#zoom").css("top", (e.pageY - yOffset) + "px");
+		$("#zoom").css("left", (e.pageX + xOffset) + "px");
+	}
+</script>
+</head>
+<body>
+	<div>
+		<h2>Effet de zoom avec légende</h2>
+		<ul>
+			<li><a href="../photos/photo1.jpg" class="lien" title="Désert">
+				<img alt="Désert" src="../photos-miniatures/photo1.jpg"/></a>
+			</li>
+			<li><a href="../photos/photo2.jpg" class="lien" title="Koala">
+				<img alt="Koala" src="../photos-miniatures/photo2.jpg"/></a>
+			</li>
+			<li><a href="../photos/photo3.jpg" class="lien" title="Manchots">
+				<img alt="Manchots" src="../photos-miniatures/photo3.jpg"/></a>
+			</li>
+			<li><a href="../photos/photo4.jpg" class="lien" title="Phare">
+				<img alt="Phare" src="../photos-miniatures/photo4.jpg"/></a>
+			</li>
+			<li><a href="../photos/photo5.jpg" class="lien" title="Méduse">
+				<img alt="Méduse" src="../photos-miniatures/photo5.jpg"/></a>
+			</li>
+			<li><a href="../photos/photo6.jpg" class="lien" title="Hortensias">
+				<img alt="Hortensias" src="../photos-miniatures/photo6.jpg"/></a>
+			</li>
+			<li><a href="../photos/photo7.jpg" class="lien" title="Tulipes">
+				<img alt="Tulipes" src="../photos-miniatures/photo7.jpg"/></a>
+			</li>
+			<li><a href="../photos/photo8.jpg" class="lien" title="Chrysanthème">
+				<img alt="Chrysanthème" src="../photos-miniatures/photo8.jpg"/></a>
+			</li>
+		</ul>
+	</div>
+</body>
+</html>
